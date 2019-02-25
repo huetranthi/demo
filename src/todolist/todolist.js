@@ -27,13 +27,11 @@ var Students = Ractive.extend({
                 this.splice('students', index, 1);
             },
             editItem: function(ctx) {
+                this.set('nameEdit',ctx.get( '.name' ));
+                this.set('birthEdit',ctx.get( '.birth' ));
                 this.toggle('edit');
-                var nameEdit = ctx.get( '.name' );
-                var birthEdit = ctx.get( '.birth' );
-                this.set('name', nameEdit);
-                this.set('birth', birthEdit);
             },
-            submit: function() {
+            submit: function(ctx) {
                 if(this.get('add')){
                     var newStudent = {
                         name: this.get('newName'),
@@ -46,16 +44,19 @@ var Students = Ractive.extend({
                     return false;
                 }
                 else {
-                    
+                    var nameEdit = ctx.get( '.name' );
+                    var birthEdit = ctx.get( '.birth' );
+                    this.toggle('edit');
                 }
             },
-            close: function() {
+            close: function(ctx) {
                 this.set('add', false);
                 this.set('edit', false);
                 this.set('newName', '');
                 this.set('newBirth', '');
-                this.set('name', '');
-                this.set('birth', '');
+                var nameE = this.get('nameEdit');
+                this.set(ctx.get( '.name' ), 'nameEdit');
+                this.set(ctx.get( '.name' ), 'birthEdit');
             }
         });
     },
@@ -65,14 +66,14 @@ var Students = Ractive.extend({
         edit: false,
         newName: '',
         newBirth: '',
-        name: '',
-        birth: ''
+        nameEdit: '1',
+        birthEdit: ''
     }
 });
 var ractive = new Ractive({
     target: '#target',
     template: '#template',
-    components: { students: Students },
+    components: { Students: Students },
     data: {
         newName: 'aa',
         newBirth: ''

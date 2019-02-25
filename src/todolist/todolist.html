@@ -16,71 +16,90 @@
 	</div>
 	<script id="template" type='text/ractive'>
 		<p class="header-title">TO DO LIST</p>
-			
-		<students/>
+		<Students/>
 	</script>
 	<script id="student" type='text/ractive'>
 		<!-- <button type="button" class="btn btn-primary btn-add" data-toggle="modal" on-click="add" data-target="#myModal">Add</button> -->
 		
 		<button type="button" id="myBtn" class="btn btn-primary btn-add" on-click="@.toggle('add')" >Add</button>
-			{{#if add || edit }}
-				<div id="myModal" class="modal" role="dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-								<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-								<h4 class="modal-title">{{add === true ? "Add student form" : "Edit student form"}}</h4>
-							</div>
-						<div class="form-group">
-								<label for="name">Name: {{newName}} </label>
-								{{#if add}}
-                	<input type="text" class="form-control" value="{{newName}}" placeholder="Enter name">
-								{{else}}
-								<input type="text" class="form-control" value="{{name}}" placeholder="Enter name">
-								{{/if}}
-							</div>
-              <div class="form-group">
-								<label for="birth">Birth:</label>
-								{{#if add}}
-									<input type="date" class="form-control date" value="{{newBirth}}" placeholder="Enter birth">
-								{{else}}
-									<input type="date" class="form-control date" value="{{birth}}" placeholder="Enter birth">
-								{{/if}}
-							</div>
-							<div class="modal-footer">
-									<button type="submit" class="btn btn-primary btn-sub" on-click="submit" data-dismiss="modal" >{{add === true ? "submit" : "confirm"}}</button>
-									<button class="btn btn-danger btn-close" on-click="close">Close</button>
-							</div>
+		{{#if add }}
+			<div id="myModal" class="modal" role="dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+						<h4 class="modal-title">{{add === true ? "Add student form" : "Edit student form"}}</h4>
+					</div>
+					<div class="form-group">
+						<label for="name">Name: {{newName}} </label>
+						{{#if add}}
+							<input type="text" class="form-control" value="{{newName}}" placeholder="Enter name">
+						{{else}}
+							<input type="text" class="form-control" value="{{name}}" placeholder="Enter name">
+						{{/if}}
+					</div>
+					<div class="form-group">
+						<label for="birth">Birth:</label>
+						{{#if add}}
+							<input type="date" class="form-control date" value="{{newBirth}}" placeholder="Enter birth">
+						{{else}}
+							<input type="date" class="form-control date" value="{{birth}}" placeholder="Enter birth">
+						{{/if}}
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sub" on-click="submit" data-dismiss="modal" >{{add === true ? "submit" : "confirm"}}</button>
+						<button class="btn btn-danger btn-close" on-click="close">Close</button>
 					</div>
 				</div>
-			{{/if}}
-		
-		
+			</div>
+		{{/if}}
+	
 		<div>
-				<table class="table table-striped">
-					<thead>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Birth</th>
+						<th>Edit</th>
+						<th>Del</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each students:index }}
 						<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Birth</th>
-								<th>Edit</th>
-								<th>Del</th>
+							<td>{{index + 1}} </td>
+							<td>{{name}} </td>
+							<td>{{birth}} </td>
+							<td><button class="btn btn-info" on-click="editItem" >Edit</button> </td>
+							<td><button class="btn btn-danger" on-click="['removeItem',index]">Del</button> </td>
+							{{#if edit }}
+							<div class="modal" role="dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Edit student form</h4>
+									</div>
+									<div class="form-group">
+										<label for="name">Name: </label>
+										<input type="text" class="form-control" value="{{nameEdit}}" placeholder="Enter name">
+									</div>
+									<div class="form-group">
+										<label for="birth">Birth:</label>
+										<input type="date" class="form-control date" value="{{birthEdit}}" placeholder="Enter birth">
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary btn-sub" on-click="submit" data-dismiss="modal" >confirm</button>
+										<button class="btn btn-danger btn-close" on-click="close">Close</button>
+									</div>
+								</div>
+							</div>
+						{{/if}}
 						</tr>
-					</thead>
-					<tbody>
-						{{#each students:index }}
-								<tr>
-										<td>{{index + 1}} </td>
-										<td>{{name}} </td>
-										<td>{{birth}} </td>
-										<td><button class="btn btn-info" on-click="editItem" >Edit</button> </td>
-										<td><button class="btn btn-danger" on-click="['removeItem',index]">Del</button> </td>
-								</tr>
-						{{/each}}
-					</tbody>   
-				</table>
+					{{/each}}
+				</tbody>   
+			</table>
 		</div>
 	</script>
-	<script>
+	<!-- <script>
 		$(document).ready(function () {
 			$('#datepicker').datepicker({
 					format: "dd/mm/yyyy",
@@ -89,7 +108,7 @@
 		});
 		var modal = document.getElementById('myModal');
 		var btn = document.getElementById("myBtn");
-</script>
+	</script> -->
 	<script src="../todolist/todolist.js"></script>
 	
 </body>
